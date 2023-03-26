@@ -13,6 +13,8 @@ end
 
 vim.cmd [[packadd packer.nvim]]
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+vim.cmd([[ let g:vimspector_enable_mappings = 'HUMAN' ]])
+vim.cmd([[ let g:vimspector_base_dir='/Users/inarvos/.share/nvim/site/pack/packer/start/vimspector']])
 
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
@@ -26,7 +28,6 @@ packer.startup(function(use)
   use 'folke/tokyonight.nvim'
   use 'bluz71/vim-nightfly-colors'
   use 'bluz71/vim-moonfly-colors'
-
   use 'kyazdani42/nvim-web-devicons'
   use 'ryanoasis/vim-devicons'
   use 'nvim-lualine/lualine.nvim'

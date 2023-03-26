@@ -52,9 +52,6 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 -- empty setup using defaults
 
-vim.g.vimspector_enable_mappings = 'HUMAN'
--- vim.g.vimspector_base_dir='/Users/inarvos/.local/share/nvim/site/pack/packer/start/vimspector'
-
 require("nvim-tree").setup()
 -- OR setup with some options
 require("nvim-tree").setup({

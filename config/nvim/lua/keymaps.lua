@@ -3,12 +3,13 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap -- for conciseness
 
----------------------
--- General Keymaps
----------------------
+-- delete single character without copying into register
+keymap.set('n', 'x', '"_x')
 
--- use jk to exit insert mode
-keymap.set("i", "jk", "<ESC>")
+-- open terminal
+keymap.set("n", "<leader>tr", ":terminal<Return>")
+-- exit insert mode in terminal
+keymap.set('t', '<ESC>', [[<C-\><C-n>]], { noremap = true })
 
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>")
@@ -16,20 +17,43 @@ keymap.set("n", "<leader>nh", ":nohl<CR>")
 -- delete single character without copying into register
 keymap.set("n", "x", '"_x')
 
+-- Increment/decrement
+keymap.set('n', '+', '<C-a>')
+keymap.set('n', '-', '<C-x>')
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>") -- increment
 keymap.set("n", "<leader>-", "<C-x>") -- decrement
 
--- window management
-keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
-keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
+-- Delete a word backwards
+keymap.set('n', 'dw', 'vb"_d')
 
-keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
-keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
-keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
-keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
+-- Select all
+keymap.set('n', '<C-a>', 'gg<S-v>G')
+
+-- Save with root permission (not working for now)
+--vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
+
+-- Window management
+keymap.set('n', 'ss', ':split<Return><C-w>w') -- split window vertically
+keymap.set('n', 'sv', ':vsplit<Return><C-w>w') -- split window vertically
+keymap.set("n", "se", "<C-w>=") -- make split windows equal width & height
+keymap.set("n", "sx", ":close<CR>") -- close current split window
+-- Move window
+keymap.set('n', '<Space>', '<C-w>w')
+keymap.set('', 's<left>', '<C-w>h')
+keymap.set('', 's<up>', '<C-w>k')
+keymap.set('', 's<down>', '<C-w>j')
+keymap.set('', 's<right>', '<C-w>l')
+
+keymap.set("n", "<leader>vs", ":call vimspector#Launch()<CR>") -- vimspector
+
+-- Tabs
+keymap.set('n', 'te', ':tabedit<Return>') -- edit new tab
+keymap.set("n", "to", ":tabnew<CR>") -- open new tab
+keymap.set("n", "tc", ":tabclose<CR>") -- close current tab
+keymap.set("n", "tx", ":tabclose<CR>") -- close current tab
+keymap.set("n", "tn", ":tabn<CR>") --  go to next tab
+keymap.set("n", "tp", ":tabp<CR>") --  go to previous tab
 
 ----------------------
 -- Plugin Keybinds
@@ -39,7 +63,7 @@ keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle split window maximization
 
 -- nvim-tree
-keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
+keymap.set("n", "<leader>nt", ":NvimTreeToggle<CR>") -- toggle file explorer
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
