@@ -11,13 +11,17 @@ if num_args == 0 then
   vim.api.nvim_exec('intro', false)
 end
 
-vim.cmd [[packadd packer.nvim]]
+vim.cmd [[ packadd packer.nvim ]]
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 vim.cmd([[ let g:vimspector_enable_mappings = 'HUMAN' ]])
 vim.cmd([[ let g:vimspector_base_dir='/Users/inarvos/.share/nvim/site/pack/packer/start/vimspector']])
+vim.cmd([[ packadd! vimspector ]])
 
 packer.startup(function(use)
+
   use 'wbthomason/packer.nvim'
+
+  --Colorschemes plugins:
   --use {
     --'svrana/neosolarized.nvim',
     --requires = { 'tjdevries/colorbuddy.nvim' }
@@ -26,11 +30,17 @@ packer.startup(function(use)
   use 'norcalli/nvim-colorizer.lua'
   use 'cocopon/iceberg.vim'
   use 'folke/tokyonight.nvim'
-  use 'bluz71/vim-nightfly-colors'
+  use { "bluz71/vim-nightfly-colors", as = "nightfly" }
   use 'bluz71/vim-moonfly-colors'
-  use 'kyazdani42/nvim-web-devicons'
+
+  --Devicons (tree):
   use 'ryanoasis/vim-devicons'
+  use 'kyazdani42/nvim-web-devicons'
+
+  --Lualine (line below code)
   use 'nvim-lualine/lualine.nvim'
+
+  --Code help:
   use 'onsails/lspkind-nvim'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -43,21 +53,28 @@ packer.startup(function(use)
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
   use 'glepnir/lspsaga.nvim'
-  --use {
-    --'nvim-treesitter/nvim-treesitter',
-    --run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-  --}
+
+  --TODO:
+  --Code design:
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  }
   use 'MunifTanjim/prettier.nvim'
   use 'windwp/nvim-autopairs'
-  --use 'windwp/nvim-ts-autotag' --TreeSitter required
+  use 'windwp/nvim-ts-autotag' --TreeSitter required
+  
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'akinsho/nvim-bufferline.lua'
-  --use { 'numToStr/Comment.nvim', -- ? TreeSitter required
-    --requires = {
-      --'JoosepAlviste/nvim-ts-context-commentstring'
-    --}
-  --}
+  use { 'numToStr/Comment.nvim', -- ? TreeSitter required
+    requires = {
+      'JoosepAlviste/nvim-ts-context-commentstring'
+    }
+  }
   use 'folke/zen-mode.nvim'
   use({
     "iamcco/markdown-preview.nvim",
@@ -102,4 +119,6 @@ packer.startup(function(use)
         'luukvbaal/statuscol.nvim'
     }}
   use { 'puremourning/vimspector' }
+  use { 'm4xshen/autoclose.nvim' }
+  use { 'mfussenegger/nvim-dap' }
 end)
