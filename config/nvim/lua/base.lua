@@ -47,32 +47,6 @@ vim.opt.formatoptions:append { 'r' }
 
 vim.g.mapleader = ","
 
---NvimTree:
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
--- set termguicolors to enable highlight groups
--- empty setup using defaults
-
-require("nvim-tree").setup()
--- OR setup with some options
-require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
-    },
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
-
 local Type = {GLOBAL_OPTION = "o", WINDOW_OPTION = "wo", BUFFER_OPTION = "bo"}
 local add_options = function(option_type, options)
   if type(options) ~= "table" then
@@ -92,3 +66,28 @@ end
 Option.g {
   virtualedit = "onemore",
 }
+
+-- Highlights
+
+vim.opt.termguicolors = true
+vim.opt.background = 'dark'
+vim.opt.signcolumn = 'yes'
+vim.opt.winblend = 0
+vim.opt.wildoptions = 'pum'
+vim.opt.pumblend = 5
+
+--highlight yanked text for 200ms using the "Visual" highlight group
+vim.cmd [[
+  augroup highlight_yank
+  autocmd!
+  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=100})
+  augroup END
+]]
+
+-- Colorscheme
+
+local status, _ = pcall(vim.cmd, 'colorscheme moonfly')
+if not status then
+  print('Colorscheme not found!')
+  return
+end
